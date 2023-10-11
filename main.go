@@ -281,7 +281,9 @@ func ProcessTestData(rowData []GoTestJsonRowData) (*ProcessedTestdata, error) {
 	for _, t := range testSuiteSlice {
 		testCases := make([]TestDetails, 0)
 		for _, t2 := range testCasesSlice {
-			if strings.Contains(t2.Name, t.Name) && t2.PackageName == t.PackageName {
+			// TODO: Increase == IncreaseSub fix
+			tmp := strings.Split(t2.Name, "/")[0]
+			if tmp == t.Name && t2.PackageName == t.PackageName {
 				testCases = append(testCases, t2)
 			}
 		}
@@ -429,7 +431,7 @@ func generateTestCaseHTMLElements(testsLogOverview []TestOverview) (*map[string]
 				)
 
 			}
-			testCasesCardsMap[testSuite.TestSuite.Name+"-"+testSuite.TestSuite.PackageName] = append(testCasesCardsMap[testSuite.TestSuite.Name], string(testCaseCard))
+			testCasesCardsMap[testSuite.TestSuite.Name+"-"+testSuite.TestSuite.PackageName] = append(testCasesCardsMap[testSuite.TestSuite.Name+"-"+testSuite.TestSuite.PackageName], string(testCaseCard))
 		}
 	}
 
